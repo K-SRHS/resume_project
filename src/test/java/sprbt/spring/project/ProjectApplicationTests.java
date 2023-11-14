@@ -9,7 +9,6 @@ class ProjectApplicationTests {
 	@Test
 	void contextLoads() {
 
-		System.out.print("진짜모름");
 	}
 
 }
