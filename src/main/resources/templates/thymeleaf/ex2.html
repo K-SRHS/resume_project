@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Ex2 페이지</h1>
+    <div>
+        <a href="@{/thymeleaf/ex1}">EX111</a>
+    </div>
+    <div>
+        <a th:href="@{https://www.naver.com/}">naver</a>
+    </div>
+    <div>
+        <a th:href="@{/thymeleaf/ex3(name='홍길동', age=20)}">매개변수 전달</a>
+    </div>
+</body>
+</html>

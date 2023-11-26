@@ -1,0 +1,61 @@
+server: # 서버 설정
+  port: 80
+
+spring: # 스프링 설정
+  application:
+    name: spring-shop
+
+  devtools:
+    livereload:
+      enabled: true           # 자동 리로드 설정
+    restart:
+      enabled: true           # 자동 재실행 설정
+
+  thymeleaf:
+    cache: false              # 캐쉬 없음
+
+  jpa: # JPA 설정
+    hibernate:
+      ddl-auto: create
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy # 카멜케이스를 언더스코어로 변환
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect # MySQL 8.0
+    open-in-view: true # JPA 영속성 컨텍스트를 View까지 유지
+    properties:
+      hibernate:
+        format_sql: true # SQL 예쁘게 출력
+
+  datasource: # 데이터베이스 연결 설정
+    url: jdbc:mysql://localhost:3306/project?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace # SQL 로그 출력
+
+###################################
+##Security Setting
+###################################
+  security:
+    user:
+      name: test@test.com
+      password: 1111
+
+  servlet:
+    multipart:
+      max-file-size: 10MB     # 파일 업로드 최대 크기
+      max-request-size: 100MB # 파일 업로드 최대 크기
+
+#itemImgLocation: C:\shop\item # 상품 이미지 저장 위치
+#uploadPath: file:///C:\shop\ # 상품 이미지 업로드 위치
+
+itemImgLocation: D:/Spring_WS/shop/item/
+uploadPath: file:///D:/Spring_WS/C_Ban/shop/
