@@ -2,17 +2,17 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<style>
-    .navbar-nav {
-        margin-top: 10px; /* 아래로 내리고 싶은 만큼의 여백 설정 */
-    }
-</style>
+<!--<style>-->
+<!--    .navbar-nav {-->
+<!--        margin-top: 10px; /* 아래로 내리고 싶은 만큼의 여백 설정 */-->
+<!--    }-->
+<!--</style>-->
 
 <div th:fragment="header">
     <nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand " href="/">
-                <img src="/static/img/Logo.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+                <img src="/img/Logo.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
                 이력 닷컴
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -20,22 +20,26 @@
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                     <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')" >
                         <a class="nav-link active" aria-current="page" href="/admin/item/new">상품등록</a>
                     </li>
                     <li class="nav-item"  sec:authorize="isAuthenticated()">
-                        <a class="nav-link active" aria-current="page" href="/admin/items">이력서관리</a>
+                        <a class="nav-link active" aria-current="page" href="/resume">이력서관리</a>
                     </li>
-                    <li class="nav-item"  sec:authorize="isAuthenticated()" >
-                        <a class="nav-link active" aria-current="page" href="/cart">장바구니</a>
-                    </li>
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <a class="nav-link active" aria-current="page" href="/orders">구매이력</a>
-                    </li>
+<!--                    <li class="nav-item"  sec:authorize="isAuthenticated()" >-->
+<!--                        <a class="nav-link active" aria-current="page" href="/cart">장바구니</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item" sec:authorize="isAuthenticated()">-->
+<!--                        <a class="nav-link active" aria-current="page" href="/orders">구매이력</a>-->
+<!--                    </li>-->
                     <li class="nav-item" sec:authorize="isAnonymous()">
                         <a class="nav-link active" aria-current="page" href="/member/login">로그인</a>
                     </li>
@@ -47,10 +51,7 @@
                     </li>
 
                 </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+
             </div>
         </div>
     </nav>

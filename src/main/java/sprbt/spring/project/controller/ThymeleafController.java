@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ThymeleafController {
 
     @GetMapping("/")
-    public String ex4(){
+    public String ex0(){
 
         return "index";
     }
