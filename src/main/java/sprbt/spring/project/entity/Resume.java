@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class resume{
+public class Resume {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

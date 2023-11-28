@@ -11,7 +11,7 @@ import org.modelmapper.ModelMapper;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class resumeFormDto {
+public class ResumeFormDto {
 
     private Long id;             // 이력서 번호
 

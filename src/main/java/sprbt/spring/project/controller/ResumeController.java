@@ -1,33 +1,35 @@
 package sprbt.spring.project.controller;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import sprbt.spring.project.dto.resumeFormDto;
-
-import java.io.IOException;
-import java.util.List;
+import sprbt.spring.project.dto.ResumeFormDto;
+import sprbt.spring.project.service.ResumeService;
 
 @Controller
-@RequiredArgsConstructor
-public class resumeController {
+public class ResumeController {
 
-//    private final ItemService itemService;
+    private final ResumeService resumeService;
+
+    public ResumeController(ResumeService resumeService) {
+        this.resumeService = resumeService;
+    }
 
     @GetMapping("/resume")
     public String itemForm(Model model) {
-        model.addAttribute("resumeFormDto", new resumeFormDto());
+        model.addAttribute("resumeFormDto", new ResumeFormDto());
         return "resume/resumeForm";
     }
-
+    @PostMapping("/resume")
+    public String saveResume(@ModelAttribute("resumeFormDto") ResumeFormDto resumeFormDto) {
+        resumeService.saveResume(resumeFormDto); // 서비스를 호출하여 데이터 저장
+        return "redirect:/"; // 저장 후 이동할 페이지
+    }
 //    @PostMapping("/resume")
-//    public String itemNew(@Valid resumeFormDto itemFormDto,
+//    public String itemNew(@Valid resumeFormDto resumeFormDto,
 //                          @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList,
 //                          BindingResult bindingResult,
 //                          Model model) {
