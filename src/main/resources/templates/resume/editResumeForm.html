@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Resume</title>
+</head>
+<body>
+<h1>Edit Resume</h1>
+<!-- 이력서 편집 폼 내용 -->
+<form th:object="${resumeFormDto}" th:action="@{/update/{resumeId}(resumeId=${resumeFormDto.id})}" method="post">
+    <!-- 필드들 -->
+    <label for="lastedu">최종 학력</label>
+    <input type="text" id="lastedu" name="lastedu" th:field="*{lastedu}" required><br><br>
+
+    <label for="uniname">학교 이름</label>
+    <input type="text" id="uniname" name="uniname" th:field="*{uniname}" required><br><br>
+
+    <label for="major">전공</label>
+    <input type="text" id="major" name="major" th:field="*{major}" required><br><br>
+
+    <label for="interest">관심 분야</label>
+    <input type="text" id="interest" name="interest" th:field="*{interest}"><br><br>
+
+    <!-- 수정 버튼 -->
+    <button type="submit">수정</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>이력서 목록</title>
+</head>
+<body layout:fragment="content">
+<h1>이력서 목록</h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Last Education</th>
+        <th>University Name</th>
+        <th>Major</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 이력서 목록 표시 -->
+    <tr th:each="resume : ${resumes}">
+        <td th:text="${resume.id}">ID</td>
+        <td th:text="${resume.lastedu}">Last Education</td>
+        <td th:text="${resume.uniname}">University Name</td>
+        <td th:text="${resume.major}">Major</td>
+        <td><a th:href="@{'/edit/' + ${resume.id}}">수정하기</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

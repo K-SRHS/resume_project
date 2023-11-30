@@ -26,6 +26,8 @@ public class ResumeFormDto {
 
     private String interest;   // 관심분야
 
+    private String userEmail;   // 사용자 이름 또는 ID (로그인한 사용자 정보)
+
     private static ModelMapper modelMapper = new ModelMapper();
 
 //    public Item createItem(){

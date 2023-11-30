@@ -29,6 +29,8 @@ public class Resume {
     @Column(nullable = true)
     private String interest; // 상품 상세 설명
 
+    @Column(nullable = false, length = 50)
+    private String userEmail; // 사용자명 또는 사용자 ID
 
 //    @CreationTimestamp
 //    private LocalDateTime regTime; // 상품 등록 시간
