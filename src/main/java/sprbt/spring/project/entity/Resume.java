@@ -32,6 +32,11 @@ public class Resume {
     @Column(nullable = false, length = 50)
     private String userEmail; // 사용자명 또는 사용자 ID
 
+    // 다대일 관계 설정
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id") // Member 엔티티의 PK
+    private Member member; // Member와의 연관 관계
+
 //    @CreationTimestamp
 //    private LocalDateTime regTime; // 상품 등록 시간
 //

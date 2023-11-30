@@ -28,6 +28,8 @@ public class ResumeFormDto {
 
     private String userEmail;   // 사용자 이름 또는 ID (로그인한 사용자 정보)
 
+    private Long memberId; // 사용자 ID 추가
+
     private static ModelMapper modelMapper = new ModelMapper();
 
 //    public Item createItem(){

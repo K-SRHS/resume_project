@@ -23,7 +23,7 @@
     <tbody>
     <!-- 이력서 목록 표시 -->
     <tr th:each="resume : ${resumes}">
-        <td th:text="${resume.id}">ID</td>
+        <td th:text="${resume.member.id}">ID</td>
         <td th:text="${resume.lastedu}">Last Education</td>
         <td th:text="${resume.uniname}">University Name</td>
         <td th:text="${resume.major}">Major</td>

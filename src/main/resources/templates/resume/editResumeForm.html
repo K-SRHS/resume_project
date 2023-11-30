@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <title>Edit Resume</title>
 </head>
-<body>
+<div layout:fragment="content">
 <h1>Edit Resume</h1>
 <!-- 이력서 편집 폼 내용 -->
 <form th:object="${resumeFormDto}" th:action="@{/update/{resumeId}(resumeId=${resumeFormDto.id})}" method="post">

@@ -5,7 +5,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import sprbt.spring.project.dto.ResumeFormDto;
+import sprbt.spring.project.entity.Member;
 import sprbt.spring.project.entity.Resume;
+import sprbt.spring.project.repository.MemberRepository;
 import sprbt.spring.project.repository.ResumeRepository;
 
 import java.util.List;
@@ -15,9 +17,11 @@ import java.util.Optional;
 public class ResumeService {
 
     private final ResumeRepository resumeRepository;
+    private final MemberRepository memberRepository;
 
-    public ResumeService(ResumeRepository resumeRepository) {
+    public ResumeService(MemberRepository memberRepository, ResumeRepository resumeRepository) {
         this.resumeRepository = resumeRepository;
+        this.memberRepository = memberRepository;
     }
 
     public void saveResume(ResumeFormDto resumeFormDto) {
@@ -27,18 +31,25 @@ public class ResumeService {
         // 현재 사용자 정보 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-
         // 현재 사용자 정보를 Resume 엔티티에 추가
         resume.setUserEmail(currentPrincipalName);
 
-        resumeRepository.save(resume);
+        // Resume를 저장하고 Member 엔티티에도 추가
+        Resume savedResume = resumeRepository.save(resume);
+        Member member = memberRepository.findByEmail(currentPrincipalName)
+                .orElseThrow(() -> new EntityNotFoundException("해당 이메일을 찾을 수 없습니다: " + currentPrincipalName));
+        member.addResume(savedResume);
     }
 
     // 다른 필요한 메서드들...
 
     private Resume convertToResumeEntity(ResumeFormDto resumeFormDto) {
+        // 현재 사용자 정보 가져오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
         Resume resume = new Resume();
         // ResumeFormDto의 필드 값을 Resume 엔티티에 설정
+        resume.setMember(memberRepository.findMemberByEmail(currentPrincipalName));
         resume.setLastedu(resumeFormDto.getLastedu());
         resume.setUniname(resumeFormDto.getUniname());
         resume.setMajor(resumeFormDto.getMajor());

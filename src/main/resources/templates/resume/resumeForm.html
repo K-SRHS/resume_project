@@ -65,7 +65,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">최종학력</span>
             </div>
-            <input type="text" th:field="*{lastedu}" class="form-control" placeholder="최종학력을 입력해주세요">
+            <input type="text" required="" th:field="*{lastedu}" class="form-control" placeholder="최종학력을 입력해주세요">
         </div>
         <p th:if="${#fields.hasErrors('lastedu')}" th:errors="*{lastedu}" class="fieldError">Incorrect data</p>
 
@@ -73,7 +73,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">학교명</span>
             </div>
-            <input type="text" th:field="*{uniname}" class="form-control" placeholder="학교명을 입력해주세요">
+            <input type="text" required="" th:field="*{uniname}" class="form-control" placeholder="학교명을 입력해주세요">
         </div>
         <p th:if="${#fields.hasErrors('uniname')}" th:errors="*{uniname}" class="fieldError">Incorrect data</p>
 
@@ -81,7 +81,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">전공</span>
             </div>
-            <input type="text" th:field="*{major}" class="form-control" placeholder="전공을 입력해주세요">
+            <input type="text" required="" th:field="*{major}" class="form-control" placeholder="전공을 입력해주세요">
         </div>
         <p th:if="${#fields.hasErrors('major')}" th:errors="*{major}" class="fieldError">Incorrect data</p>
 
