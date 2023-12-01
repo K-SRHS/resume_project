@@ -1,30 +1,49 @@
 package sprbt.spring.project.service;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import sprbt.spring.project.dto.ProfileImgDto;
 import sprbt.spring.project.dto.ResumeFormDto;
 import sprbt.spring.project.entity.Member;
+import sprbt.spring.project.entity.ProfileImg;
 import sprbt.spring.project.entity.Resume;
 import sprbt.spring.project.repository.MemberRepository;
+import sprbt.spring.project.repository.ProfileImgRepository;
 import sprbt.spring.project.repository.ResumeRepository;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class ResumeService {
 
     private final ResumeRepository resumeRepository;
     private final MemberRepository memberRepository;
+    private final ProfileImgService profileImgService;
+    private final ProfileImgRepository profileImgRepository;
 
-    public ResumeService(MemberRepository memberRepository, ResumeRepository resumeRepository) {
-        this.resumeRepository = resumeRepository;
-        this.memberRepository = memberRepository;
+
+    public Long updateResume(ResumeFormDto resumeFormDto, List<MultipartFile> profileImgFileList) throws IOException {
+        Resume resume = resumeRepository.findById(resumeFormDto.getId()).orElseThrow(EntityNotFoundException::new);
+        // 더티체킹
+        resume.updateResume(resumeFormDto);
+        List<Long> profileImgIds = resumeFormDto.getProfileImgIds();
+
+        for (int i = 0; i < profileImgFileList.size(); i++) {
+            profileImgService.updateProfileImg(profileImgIds.get(i),profileImgFileList.get(i));
+        }
+        return resume.getId();
     }
-
-    public void saveResume(ResumeFormDto resumeFormDto) {
+    public void saveResume(ResumeFormDto resumeFormDto, MultipartFile profileImgFile) throws IOException {
         // ResumeFormDto를 Resume 엔티티로 변환하거나 필요한 처리를 수행한 후 저장
         Resume resume = convertToResumeEntity(resumeFormDto);
 
@@ -36,6 +55,12 @@ public class ResumeService {
 
         // Resume를 저장하고 Member 엔티티에도 추가
         Resume savedResume = resumeRepository.save(resume);
+
+        // 이미지가 등록
+        //이미지 등록
+        ProfileImg profileImg = new ProfileImg();
+        profileImgService.saveProfileImg(profileImg, profileImgFile);
+
         Member member = memberRepository.findByEmail(currentPrincipalName)
                 .orElseThrow(() -> new EntityNotFoundException("해당 이메일을 찾을 수 없습니다: " + currentPrincipalName));
         member.addResume(savedResume);
@@ -112,6 +137,21 @@ public class ResumeService {
         return resumeRepository.findByUserEmail(userEmail);
     }
 
+    public ResumeFormDto getResumeDetail(Long resumeId) {
+        List<ProfileImg> profileImgList = profileImgRepository.findByResumeIdOrderByIdAsc(resumeId);
+        List<ProfileImgDto> profileImgDtoList = new ArrayList<>();
+
+        for (ProfileImg profileImg : profileImgList) {
+            ProfileImgDto profileImgDto = ProfileImgDto.entitytoDto(profileImg);
+            profileImgDtoList.add(profileImgDto);
+        }
+        Resume resume = resumeRepository.findById(resumeId).orElseThrow(()->
+                new EntityNotFoundException("해당 상품이 없습니다. id : "+ resumeId));
+
+        ResumeFormDto resumeFormDto = ResumeFormDto.entityToDto(resume);
+        resumeFormDto.setProfileImgDtoList(profileImgDtoList);
+        return resumeFormDto;
+    }
 
     // 다른 필요한 메서드들...
 }

@@ -2,6 +2,7 @@ package sprbt.spring.project.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import sprbt.spring.project.dto.ResumeFormDto;
 
 @Entity
 @Getter
@@ -37,6 +38,12 @@ public class Resume {
     @JoinColumn(name = "member_id") // Member 엔티티의 PK
     private Member member; // Member와의 연관 관계
 
+    public void updateResume(ResumeFormDto resumeFormDto) {
+        this.lastedu = resumeFormDto.getLastedu();
+        this.uniname = resumeFormDto.getUniname();
+        this.major = resumeFormDto.getMajor();
+        this.interest = resumeFormDto.getInterest();
+    }
 //    @CreationTimestamp
 //    private LocalDateTime regTime; // 상품 등록 시간
 //

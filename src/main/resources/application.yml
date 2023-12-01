@@ -57,5 +57,5 @@ logging:
 #itemImgLocation: C:\shop\item # 상품 이미지 저장 위치
 #uploadPath: file:///C:\shop\ # 상품 이미지 업로드 위치
 
-itemImgLocation: D:/Spring_WS/shop/item/
-uploadPath: file:///D:/Spring_WS/C_Ban/shop/
+profileImgLocation: D:/Spring_WS/project/item/
+uploadPath: file:///D:/Spring_WS/C_Ban/project/

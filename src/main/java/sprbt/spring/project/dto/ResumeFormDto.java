@@ -3,6 +3,10 @@ package sprbt.spring.project.dto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.modelmapper.ModelMapper;
+import sprbt.spring.project.entity.Resume;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -30,12 +34,16 @@ public class ResumeFormDto {
 
     private Long memberId; // 사용자 ID 추가
 
+    private List<ProfileImgDto> profileImgDtoList = new ArrayList<>();
+
+    private List<Long> profileImgIds = new ArrayList<>();
+
     private static ModelMapper modelMapper = new ModelMapper();
 
 //    public Item createItem(){
 //        return modelMapper.map(this,Item.class);
 //    }
-//    public static ItemFormDto entityToDto(Item item){
-//        return modelMapper.map(item, ItemFormDto.class);
-//    }
+    public static ResumeFormDto entityToDto(Resume resume){
+        return modelMapper.map(resume, ResumeFormDto.class);
+    }
 }
