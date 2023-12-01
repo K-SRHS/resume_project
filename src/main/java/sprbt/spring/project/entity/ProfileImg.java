@@ -21,7 +21,7 @@ public class ProfileImg extends BaseEntity {
     private String oriImgName;
     private String imgUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "resume_id")
     private Resume resume;
 

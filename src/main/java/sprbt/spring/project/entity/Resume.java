@@ -2,6 +2,7 @@ package sprbt.spring.project.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import sprbt.spring.project.common.entity.BaseEntity;
 import sprbt.spring.project.dto.ResumeFormDto;
 
 @Entity
@@ -11,7 +12,7 @@ import sprbt.spring.project.dto.ResumeFormDto;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Resume {
+public class Resume extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,10 +45,6 @@ public class Resume {
         this.major = resumeFormDto.getMajor();
         this.interest = resumeFormDto.getInterest();
     }
-//    @CreationTimestamp
-//    private LocalDateTime regTime; // 상품 등록 시간
-//
-//    @LastModifiedDate
-//    private LocalDateTime updateTime; // 상품 수정 시간
+
 
 }

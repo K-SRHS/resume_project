@@ -75,6 +75,11 @@ public class ResumeController {
 
         return "redirect:/";
     }
+    @PostMapping("/update/{resumeId}")
+    public String updateResume(@PathVariable Long resumeId, @ModelAttribute("resumeFormDto") ResumeFormDto resumeFormDto) {
+        resumeService.updateResume(resumeId, resumeFormDto); // 이력서 업데이트 서비스 호출
+        return "redirect:/list"; // 수정 완료 후 이력서 목록 페이지로 리다이렉트
+    }
 
     @GetMapping("/list")
     public String showResumes(Model model) {

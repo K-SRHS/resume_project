@@ -96,19 +96,17 @@
 
         <!-- 이미지 업로드 부분 -->
         <div class="form-group">
-            <th:block th:if="${not #lists.isEmpty(resumeFormDto.profileImgDtoList)}">
-                <div class="img-div" th:each="profileImgDto, status: ${resumeFormDto.profileImgDtoList}">
-                    <label th:text="${not #strings.isEmpty(profileImgDto.oriImgName)} ? ${profileImgDto.oriImgName} : '프로필이미지' + ${status.index+1}"></label>
-                    <img th:if="${not #strings.isEmpty(profileImgDto.imagePath)}" th:src="${profileImgDto.imagePath}" alt="Profile Image">
+            <th:block th:if="${#lists.isEmpty(resumeFormDto.profileImgDtoList)}">
+                <div class="custom-file img-div">
+                    <input type="file" class="custom-file-input" name="profileImgFile">
+                    <label class="custom-file-label" th:text="프로필이미지"></label>
                 </div>
             </th:block>
 
-            <th:block th:if="${#lists.isEmpty(resumeFormDto.profileImgDtoList)}">
-                <div class="form-group" th:each="num: ${#numbers.sequence(1,5)}">
-                    <div class="custom-file img-div">
-                        <input type="file" class="custom-file-input" name="profileImgFile">
-                        <label class="custom-file-label" th:text="프로필이미지 + ${num}"></label>
-                    </div>
+            <th:block th:if="${not #lists.isEmpty(resumeFormDto.profileImgDtoList)}">
+                <div class="img-div">
+                    <label th:text="${not #strings.isEmpty(resumeFormDto.profileImgDtoList[0].oriImgName)} ? ${resumeFormDto.profileImgDtoList[0].oriImgName} : '프로필이미지'"></label>
+                    <img th:if="${not #strings.isEmpty(resumeFormDto.profileImgDtoList[0].imagePath)}" th:src="${resumeFormDto.profileImgDtoList[0].imagePath}" alt="Profile Image">
                 </div>
             </th:block>
         </div>
