@@ -6,30 +6,21 @@
 <head>
     <meta charset="UTF-8">
     <title>이력서 목록</title>
+    <link rel="stylesheet" type="text/css" href="/css/common-style.css">
+
 </head>
 <body layout:fragment="content">
 <h1>이력서 목록</h1>
 
-<table border="1">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Last Education</th>
-        <th>University Name</th>
-        <th>Major</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
+<!-- 이력서 목록 컨테이너 -->
+<div class="resume-container">
     <!-- 이력서 목록 표시 -->
-    <tr th:each="resume : ${resumes}">
-        <td th:text="${resume.member.id}">ID</td>
-        <td th:text="${resume.lastedu}">Last Education</td>
-        <td th:text="${resume.uniname}">University Name</td>
-        <td th:text="${resume.major}">Major</td>
-        <td><a th:href="@{'/edit/' + ${resume.id}}">수정하기</a></td>
-    </tr>
-    </tbody>
-</table>
+    <div th:each="resume : ${resumes}" class="resume-box">
+        <!-- 이력서 이름 왼쪽 정렬 -->
+        <h3 class="resume-name" th:text="${resume.resumename}">이력서 이름</h3>
+        <!-- 수정하기 링크 오른쪽 정렬 -->
+        <a th:href="@{'/edit/' + ${resume.id}}" class="edit-link">수정하기</a>
+    </div>
+</div>
 </body>
 </html>

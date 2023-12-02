@@ -4,106 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Resume</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-        }
-
-        .form-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .input-group-prepend {
-            width: 150px;
-            text-align: left;
-        }
-
-        .custom-file-input {
-            width: 150px;
-            height: 40px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .custom-file-input input[type="file"] {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            font-size: 100px;
-            text-align: right;
-            filter: alpha(opacity=0);
-            opacity: 0;
-            outline: none;
-            background: white;
-            cursor: inherit;
-            display: block;
-        }
-
-        .custom-file-label {
-            background-color: #3498db;
-            border: 1px solid #3498db;
-            color: white;
-            display: inline-block;
-            padding: 8px 20px;
-            width: 150px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-            cursor: pointer;
-            text-align: center;
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-
-        .form-control {
-            width: calc(100% - 150px);
-        }
-
-        textarea.form-control {
-            height: 150px;
-            resize: none;
-        }
-
-        .fieldError {
-            color: #bd2130;
-            font-size: 12px;
-            margin-top: 5px;
-        }
-
-        .btn-container {
-            text-align: center;
-        }
-
-        .btn-primary {
-            padding: 10px 20px;
-            background-color: #3498db;
-            border: none;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .btn-primary:hover {
-            background-color: #2980b9;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/css/common-style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:inline="javascript">
         $(document).ready(function() {
@@ -130,7 +31,7 @@
 
 <body>
 <div layout:fragment="content">
-    <h2>이력서 수정</h2>
+    <h1>이력서 수정</h1>
     <form role="form" method="post" enctype="multipart/form-data" th:object="${resumeFormDto}"
           th:action="@{/update/{resumeId}(resumeId=${resumeFormDto.id})}">
         <input type="hidden" th:field="*{id}">
