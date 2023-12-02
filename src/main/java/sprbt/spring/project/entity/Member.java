@@ -1,5 +1,6 @@
 package sprbt.spring.project.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import sprbt.spring.project.common.entity.BaseEntity;
 import sprbt.spring.project.common.entity.BaseEntity;
 import sprbt.spring.project.constant.Role;
@@ -14,7 +15,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -39,6 +39,7 @@ public class Member extends BaseEntity {
 
     // 다대일 관계 설정 - Resume과의 연관 관계
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Resume> resumes;
 
 

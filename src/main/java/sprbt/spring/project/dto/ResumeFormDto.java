@@ -38,6 +38,14 @@ public class ResumeFormDto {
 
     private List<Long> profileImgIds = new ArrayList<>();
 
+    private String profileImgUrl;
+
+    private String imgName;
+
+    private String oriImgName;
+
+    private String imgUrl;
+
     private static ModelMapper modelMapper = new ModelMapper();
 
 //    public Item createItem(){

@@ -31,18 +31,22 @@ public class ResumeService {
     private final ProfileImgService profileImgService;
     private final ProfileImgRepository profileImgRepository;
 
+    public Long updateResume(ResumeFormDto resumeFormDto, MultipartFile profileImgFile, Long profileImgId) throws IOException {
+        Resume resume = resumeRepository.findById(resumeFormDto.getId())
+                .orElseThrow(EntityNotFoundException::new);
 
-    public Long updateResume(ResumeFormDto resumeFormDto, List<MultipartFile> profileImgFileList) throws IOException {
-        Resume resume = resumeRepository.findById(resumeFormDto.getId()).orElseThrow(EntityNotFoundException::new);
-        // 더티체킹
+        // 이력서 정보 업데이트
         resume.updateResume(resumeFormDto);
-        List<Long> profileImgIds = resumeFormDto.getProfileImgIds();
 
-        for (int i = 0; i < profileImgFileList.size(); i++) {
-            profileImgService.updateProfileImg(profileImgIds.get(i),profileImgFileList.get(i));
+        if (profileImgFile != null && !profileImgFile.isEmpty()) {
+            // ProfileImgService를 사용하여 프로필 이미지 업데이트
+            profileImgService.updateProfileImg(profileImgId, profileImgFile);
         }
+
+        // 이력서 ID 반환
         return resume.getId();
     }
+
     public void saveResume(ResumeFormDto resumeFormDto, MultipartFile profileImgFile) throws IOException {
         // ResumeFormDto를 Resume 엔티티로 변환하거나 필요한 처리를 수행한 후 저장
         Resume resume = convertToResumeEntity(resumeFormDto);
@@ -51,15 +55,18 @@ public class ResumeService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         // 현재 사용자 정보를 Resume 엔티티에 추가
+        ProfileImg profileImg = new ProfileImg();
+
         resume.setUserEmail(currentPrincipalName);
+        resume.setProfileImg(profileImg);
 
         // Resume를 저장하고 Member 엔티티에도 추가
         Resume savedResume = resumeRepository.save(resume);
+        profileImgService.saveProfileImg(profileImg, profileImgFile, savedResume.getId());
 
         // 이미지가 등록
         //이미지 등록
-        ProfileImg profileImg = new ProfileImg();
-        profileImgService.saveProfileImg(profileImg, profileImgFile, savedResume.getId());
+
         Member member = memberRepository.findByEmail(currentPrincipalName)
                 .orElseThrow(() -> new EntityNotFoundException("해당 이메일을 찾을 수 없습니다: " + currentPrincipalName));
         member.addResume(savedResume);
@@ -78,6 +85,7 @@ public class ResumeService {
         resume.setUniname(resumeFormDto.getUniname());
         resume.setMajor(resumeFormDto.getMajor());
         resume.setInterest(resumeFormDto.getInterest());
+        resume.setProfileImgUrl(resume.getProfileImgUrl());
         // 다른 필드 설정...
 
         return resume;
@@ -98,6 +106,7 @@ public class ResumeService {
             resume.setUniname(resumeFormDto.getUniname());
             resume.setMajor(resumeFormDto.getMajor());
             resume.setInterest(resumeFormDto.getInterest());
+            resume.setProfileImgUrl(resume.getProfileImgUrl());
 
             // 다른 필드 설정...
 
@@ -122,15 +131,20 @@ public class ResumeService {
     private ResumeFormDto convertToResumeFormDto(Resume resume) {
         ResumeFormDto resumeFormDto = new ResumeFormDto();
         // Resume 엔티티의 필드 값을 ResumeFormDto로 설정하는 코드를 작성합니다.
+        System.out.println(resume+"섹스섹스섹섹스");
         resumeFormDto.setId(resume.getId());
         resumeFormDto.setLastedu(resume.getLastedu());
         resumeFormDto.setUniname(resume.getUniname());
         resumeFormDto.setMajor(resume.getMajor());
         resumeFormDto.setInterest(resume.getInterest());
+        resumeFormDto.setImgName(resume.getProfileImg().getImgName());
+        resumeFormDto.setOriImgName(resume.getProfileImg().getOriImgName());
+        resumeFormDto.setImgUrl(resume.getProfileImg().getImgUrl());
         // 필요한 다른 필드들을 설정합니다.
 
         return resumeFormDto;
     }
+
 
     public List<Resume> getResumesByUser(String userEmail) {
         return resumeRepository.findByUserEmail(userEmail);
@@ -151,6 +165,23 @@ public class ResumeService {
         resumeFormDto.setProfileImgDtoList(profileImgDtoList);
         return resumeFormDto;
     }
-
     // 다른 필요한 메서드들...
+
+    public ProfileImgDto digh(Long resumeId){
+        ProfileImg profileImg = profileImgRepository.findByResumeId(resumeId);
+        return EntitytoDto(profileImg);
+
+    }
+    private ProfileImgDto EntitytoDto(ProfileImg profileImg) {
+        ProfileImgDto profileImgDto = new ProfileImgDto();
+        // Resume 엔티티의 필드 값을 ResumeFormDto로 설정하는 코드를 작성합니다.
+        profileImgDto.setImgName(profileImgDto.getImgName());
+        profileImgDto.setOriImgName(profileImgDto.getOriImgName());
+        profileImgDto.setImgUrl(profileImgDto.getImgUrl());
+
+
+        // 필요한 다른 필드들을 설정합니다.
+
+        return profileImgDto;
+    }
 }

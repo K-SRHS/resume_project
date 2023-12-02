@@ -1,5 +1,6 @@
 package sprbt.spring.project.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import sprbt.spring.project.common.entity.BaseEntity;
@@ -7,7 +8,6 @@ import sprbt.spring.project.common.entity.BaseEntity;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -23,6 +23,7 @@ public class ProfileImg extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "resume_id")
+    @JsonIgnore
     private Resume resume;
 
     public void updateProfileImg(String imgName, String oriImgName, String imgUrl){

@@ -36,6 +36,7 @@ public class ResumeController {
                              @RequestParam("profileImgFile") MultipartFile profileImgFile) {
         try {
             resumeService.saveResume(resumeFormDto, profileImgFile); // 서비스를 호출하여 데이터 저장
+
             return "redirect:/"; // 저장 후 이동할 페이지
         } catch (IOException e) {
             // 오류 처리 로직 추가
@@ -48,17 +49,14 @@ public class ResumeController {
     @GetMapping("/edit/{resumeId}")
     public String editResume(@PathVariable Long resumeId, Model model) {
         ResumeFormDto resumeFormDto = resumeService.getResumeById(resumeId); // 예시로, 이력서 정보 가져오는 메서드 호출
+//        ProfileImgDto profileImgDto =
         // 이력서 수정 폼 페이지로 이동하면서, 프로필 이미지도 같이 전달합니다.
         // 이력서와 프로필 이미지를 같이 전달할 경우, 프로필 이미지의 URL을 모델에 추가해야 합니다.
-        String profileImgUrl = ""; // 이미지 URL 초기화
 
-        if (!resumeFormDto.getProfileImgDtoList().isEmpty()) {
-            ProfileImgDto profileImgDto = resumeFormDto.getProfileImgDtoList().get(0); // 첫 번째 이미지만 가져온다고 가정
-            profileImgUrl = profileImgDto.getImgUrl(); // 이미지 URL 설정
-        }
 
-        model.addAttribute("profileImgUrl", profileImgUrl); // 프로필 이미지 URL을 모델에 추가
 
+        model.addAttribute("profileImgUrl", resumeFormDto.getImgUrl()); // 프로필 이미지 URL을 모델에 추가
+        System.out.println(resumeFormDto.getImgUrl()+"ㅇㄴㅁㅇㅁ너안미fdsjkafjlda");
         model.addAttribute("resumeFormDto", resumeFormDto);
         return "resume/editResumeForm"; // 수정할 이력서의 폼 페이지로 이동
     }

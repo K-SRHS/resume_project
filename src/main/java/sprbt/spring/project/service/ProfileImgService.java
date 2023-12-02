@@ -41,26 +41,34 @@ public class ProfileImgService {
 
         profileImg.updateProfileImg(oriImgName, imgName, imgUrl);
         profileImg.setResume(resume);
+        profileImg.setImgUrl(imgUrl);
         profileImgRepository.save(profileImg);
+        // Resume 엔티티의 profileImgUrl 필드에도 저장된 imgUrl 설정
+        resume.setProfileImgUrl(imgUrl);
+        resumeRepository.save(resume);
     }
 
-    public void updateProfileImg(Long ProfileImgId, MultipartFile profileImgFile) throws IOException {
-        if(!profileImgFile.isEmpty()){
-            ProfileImg profileImg = profileImgRepository.findById(ProfileImgId).orElseThrow(EntityNotFoundException::new);
+    public void updateProfileImg(Long profileImgId, MultipartFile profileImgFile) throws IOException {
+        if (!profileImgFile.isEmpty()) {
+            ProfileImg profileImg = profileImgRepository.findById(profileImgId)
+                    .orElseThrow(EntityNotFoundException::new);
 
-            // 파일 이름이 존재하는 경우
-            if(!StringUtils.isEmpty(profileImg.getImgName())) {
-                fileService.deleteFile(profileImgLocation + "/" + profileImg.getImgName());   // 기존 파일 삭제
+            // 기존 파일 삭제
+            if (!StringUtils.isEmpty(profileImg.getImgName())) {
+                fileService.deleteFile(profileImgLocation + "/" + profileImg.getImgName());
             }
 
+            // 새 파일 업로드 및 프로필 이미지 정보 업데이트
             String oriImgName = profileImgFile.getOriginalFilename();
             String imgName = fileService.uploadFile(profileImgLocation, oriImgName, profileImgFile.getBytes());
             String imgUrl = "/images/item/" + imgName;
 
-            // 더티체킹
-            profileImg.updateProfileImg(oriImgName, imgName, imgUrl);  // 파일 정보 업데이트
+            profileImg.updateProfileImg(oriImgName, imgName, imgUrl);
             profileImgRepository.save(profileImg);
-
+            // Resume 엔티티의 profileImgUrl 필드에도 저장된 imgUrl 설정
+            Resume resume = profileImg.getResume();
+            resume.setProfileImgUrl(imgUrl);
+            resumeRepository.save(resume);
         }
     }
 }

@@ -1,5 +1,6 @@
 package sprbt.spring.project.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import sprbt.spring.project.common.entity.BaseEntity;
@@ -11,7 +12,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -40,13 +40,21 @@ public class Resume extends BaseEntity {
     // 다대일 관계 설정
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id") // Member 엔티티의 PK
+    @JsonIgnore
     private Member member; // Member와의 연관 관계
 
+    @OneToOne
+    @JoinColumn(name = "Profile_img_id")
+    @JsonIgnore
+    private ProfileImg profileImg;
+
+    private String profileImgUrl;
     public void updateResume(ResumeFormDto resumeFormDto) {
         this.lastedu = resumeFormDto.getLastedu();
         this.uniname = resumeFormDto.getUniname();
         this.major = resumeFormDto.getMajor();
         this.interest = resumeFormDto.getInterest();
+        this.profileImgUrl = resumeFormDto.getProfileImgUrl();
     }
     // getter 메서드를 통해 profileImgs에 접근할 수 있도록 합니다.
     // profileImgs 리스트를 정의합니다.
