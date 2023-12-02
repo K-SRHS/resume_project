@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -21,6 +22,9 @@ public class Resume extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "resume_id")
     private Long id; // 이력서 번호
+
+    @Column(length = 20)
+    private String resumename; //이력서 이름
 
     @Column(nullable = false, length = 20)
     private String lastedu; // 최종 학력
@@ -50,6 +54,7 @@ public class Resume extends BaseEntity {
 
     private String profileImgUrl;
     public void updateResume(ResumeFormDto resumeFormDto) {
+        this.resumename = resumeFormDto.getResumename();
         this.lastedu = resumeFormDto.getLastedu();
         this.uniname = resumeFormDto.getUniname();
         this.major = resumeFormDto.getMajor();

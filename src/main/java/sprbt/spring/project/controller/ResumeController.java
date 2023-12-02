@@ -56,8 +56,8 @@ public class ResumeController {
 
 
         model.addAttribute("profileImgUrl", resumeFormDto.getImgUrl()); // 프로필 이미지 URL을 모델에 추가
-        System.out.println(resumeFormDto.getImgUrl()+"ㅇㄴㅁㅇㅁ너안미fdsjkafjlda");
         model.addAttribute("resumeFormDto", resumeFormDto);
+        System.out.println(resumeFormDto+"sadsaㅇㅁㅇㄴㅁ안미");
         return "resume/editResumeForm"; // 수정할 이력서의 폼 페이지로 이동
     }
 
@@ -72,22 +72,23 @@ public class ResumeController {
         }
 
         if(profileImgFile.isEmpty() && resumeFormDto.getId() == null) {
-            model.addAttribute("errorMessage", "첫번째 상품 이미지는 필수 입니다.");
+            model.addAttribute("errorMessage", "이미지는 필수 입니다.");
             return "resume/editResumeForm";
         }
 
         try {
             resumeService.saveResume(resumeFormDto, profileImgFile);
         } catch (IOException e) {
-            model.addAttribute("errorMessage", "상품 등록중 오류가 발생했습니다.");
+            model.addAttribute("errorMessage", "등록중 오류가 발생했습니다.");
             return "resume/editResumeForm";
         }
 
         return "redirect:/";
     }
     @PostMapping("/update/{resumeId}")
-    public String updateResume(@PathVariable Long resumeId, @ModelAttribute("resumeFormDto") ResumeFormDto resumeFormDto) {
-        resumeService.updateResume(resumeId, resumeFormDto); // 이력서 업데이트 서비스 호출
+    public String updateResume(@PathVariable Long resumeId, @ModelAttribute("resumeFormDto") ResumeFormDto resumeFormDto,
+                               @RequestParam("profileImgFile") MultipartFile profileImgFile) throws IOException {
+        resumeService.updateResume(resumeId, resumeFormDto,profileImgFile); // 이력서 업데이트 서비스 호출
         return "redirect:/list"; // 수정 완료 후 이력서 목록 페이지로 리다이렉트
     }
 

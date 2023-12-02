@@ -8,6 +8,7 @@ import sprbt.spring.project.common.entity.BaseEntity;
 @Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

@@ -81,6 +81,7 @@ public class ResumeService {
         Resume resume = new Resume();
         // ResumeFormDto의 필드 값을 Resume 엔티티에 설정
         resume.setMember(memberRepository.findMemberByEmail(currentPrincipalName));
+        resume.setResumename(resumeFormDto.getResumename());
         resume.setLastedu(resumeFormDto.getLastedu());
         resume.setUniname(resumeFormDto.getUniname());
         resume.setMajor(resumeFormDto.getMajor());
@@ -96,20 +97,26 @@ public class ResumeService {
         return resumeRepository.findAll();
     }
     // 이력서 수정하기
-    public void updateResume(Long resumeId, ResumeFormDto resumeFormDto) {
+    public void updateResume(Long resumeId, ResumeFormDto resumeFormDto, MultipartFile profileImgFile) throws IOException {
         Optional<Resume> optionalResume = resumeRepository.findById(resumeId);
         if (optionalResume.isPresent()) {
             Resume resume = optionalResume.get();
 
             // 기존 이력서 엔티티를 새로운 데이터로 업데이트
             resume.setLastedu(resumeFormDto.getLastedu());
+            resume.setResumename(resumeFormDto.getResumename());
             resume.setUniname(resumeFormDto.getUniname());
             resume.setMajor(resumeFormDto.getMajor());
             resume.setInterest(resumeFormDto.getInterest());
             resume.setProfileImgUrl(resume.getProfileImgUrl());
 
             // 다른 필드 설정...
+            resume.updateResume(resumeFormDto);
 
+            if (profileImgFile != null && !profileImgFile.isEmpty()) {
+                // ProfileImgService를 사용하여 프로필 이미지 업데이트
+                profileImgService.updateProfileImg(resumeId, profileImgFile);
+            }
             // 엔티티 저장
             resumeRepository.save(resume);
         } else {
@@ -131,8 +138,8 @@ public class ResumeService {
     private ResumeFormDto convertToResumeFormDto(Resume resume) {
         ResumeFormDto resumeFormDto = new ResumeFormDto();
         // Resume 엔티티의 필드 값을 ResumeFormDto로 설정하는 코드를 작성합니다.
-        System.out.println(resume+"섹스섹스섹섹스");
         resumeFormDto.setId(resume.getId());
+        resumeFormDto.setResumename(resume.getResumename());
         resumeFormDto.setLastedu(resume.getLastedu());
         resumeFormDto.setUniname(resume.getUniname());
         resumeFormDto.setMajor(resume.getMajor());
@@ -175,9 +182,9 @@ public class ResumeService {
     private ProfileImgDto EntitytoDto(ProfileImg profileImg) {
         ProfileImgDto profileImgDto = new ProfileImgDto();
         // Resume 엔티티의 필드 값을 ResumeFormDto로 설정하는 코드를 작성합니다.
-        profileImgDto.setImgName(profileImgDto.getImgName());
-        profileImgDto.setOriImgName(profileImgDto.getOriImgName());
-        profileImgDto.setImgUrl(profileImgDto.getImgUrl());
+        profileImgDto.setImgName(profileImg.getImgName());
+        profileImgDto.setOriImgName(profileImg.getOriImgName());
+        profileImgDto.setImgUrl(profileImg.getImgUrl());
 
 
         // 필요한 다른 필드들을 설정합니다.

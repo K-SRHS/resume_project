@@ -28,6 +28,9 @@ public class ResumeFormDto {
     @NotBlank(message = "전공은 필수 입력 값입니다.")
     private String major;     // 전공
 
+    @NotBlank(message = "최종학력은 필수 입력 값입니다.")
+    private String resumename;        //이력서 이름
+
     private String interest;   // 관심분야
 
     private String userEmail;   // 사용자 이름 또는 ID (로그인한 사용자 정보)
