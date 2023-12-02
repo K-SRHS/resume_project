@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 import sprbt.spring.project.entity.ProfileImg;
+import sprbt.spring.project.entity.Resume;
 import sprbt.spring.project.repository.ProfileImgRepository;
+import sprbt.spring.project.repository.ResumeRepository;
 
 import java.io.IOException;
 
@@ -21,9 +23,13 @@ public class ProfileImgService {
 
     private final ProfileImgRepository profileImgRepository;
 
+    private final ResumeRepository resumeRepository;
+
     private final FileService fileService;
 
-    public void saveProfileImg(ProfileImg profileImg, MultipartFile profileImgFile) throws IOException {
+    public void saveProfileImg(ProfileImg profileImg, MultipartFile profileImgFile, Long resumeId) throws IOException {
+        Resume resume = resumeRepository.findById(resumeId)
+                .orElseThrow(() -> new EntityNotFoundException("해당 ID에 해당하는 이력서를 찾을 수 없습니다: " + resumeId));
         String oriImgName = profileImgFile.getOriginalFilename();
         String imgName = "";
         String imgUrl = "";
@@ -34,6 +40,7 @@ public class ProfileImgService {
         }
 
         profileImg.updateProfileImg(oriImgName, imgName, imgUrl);
+        profileImg.setResume(resume);
         profileImgRepository.save(profileImg);
     }
 
@@ -52,6 +59,8 @@ public class ProfileImgService {
 
             // 더티체킹
             profileImg.updateProfileImg(oriImgName, imgName, imgUrl);  // 파일 정보 업데이트
+            profileImgRepository.save(profileImg);
+
         }
     }
 }

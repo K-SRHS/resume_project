@@ -59,8 +59,7 @@ public class ResumeService {
         // 이미지가 등록
         //이미지 등록
         ProfileImg profileImg = new ProfileImg();
-        profileImgService.saveProfileImg(profileImg, profileImgFile);
-
+        profileImgService.saveProfileImg(profileImg, profileImgFile, savedResume.getId());
         Member member = memberRepository.findByEmail(currentPrincipalName)
                 .orElseThrow(() -> new EntityNotFoundException("해당 이메일을 찾을 수 없습니다: " + currentPrincipalName));
         member.addResume(savedResume);
@@ -92,18 +91,18 @@ public class ResumeService {
     public void updateResume(Long resumeId, ResumeFormDto resumeFormDto) {
         Optional<Resume> optionalResume = resumeRepository.findById(resumeId);
         if (optionalResume.isPresent()) {
-            Resume existingResume = optionalResume.get();
+            Resume resume = optionalResume.get();
 
             // 기존 이력서 엔티티를 새로운 데이터로 업데이트
-            existingResume.setLastedu(resumeFormDto.getLastedu());
-            existingResume.setUniname(resumeFormDto.getUniname());
-            existingResume.setMajor(resumeFormDto.getMajor());
-            existingResume.setInterest(resumeFormDto.getInterest());
+            resume.setLastedu(resumeFormDto.getLastedu());
+            resume.setUniname(resumeFormDto.getUniname());
+            resume.setMajor(resumeFormDto.getMajor());
+            resume.setInterest(resumeFormDto.getInterest());
 
             // 다른 필드 설정...
 
             // 엔티티 저장
-            resumeRepository.save(existingResume);
+            resumeRepository.save(resume);
         } else {
             // 이력서를 찾을 수 없는 경우 예외 처리
             throw new EntityNotFoundException("해당 이력서를 찾을 수 없습니다: " + resumeId);
@@ -155,5 +154,3 @@ public class ResumeService {
 
     // 다른 필요한 메서드들...
 }
-
-    // 다른 메서드들...

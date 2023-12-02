@@ -5,6 +5,9 @@ import lombok.*;
 import sprbt.spring.project.common.entity.BaseEntity;
 import sprbt.spring.project.dto.ResumeFormDto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -45,6 +48,8 @@ public class Resume extends BaseEntity {
         this.major = resumeFormDto.getMajor();
         this.interest = resumeFormDto.getInterest();
     }
-
+    // getter 메서드를 통해 profileImgs에 접근할 수 있도록 합니다.
+    // profileImgs 리스트를 정의합니다.
+    // ProfileImg를 profileImgs 리스트에 추가하는 메서드를 정의합니다.
 
 }
