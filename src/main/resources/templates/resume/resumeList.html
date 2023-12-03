@@ -7,7 +7,17 @@
     <meta charset="UTF-8">
     <title>이력서 목록</title>
     <link rel="stylesheet" type="text/css" href="/css/common-style.css">
+    <script th:inline="javascript">
+        function confirmDelete() {
+            var result = confirm("정말로 삭제하시겠습니까?");
 
+            if (result) {
+                return true; // 사용자가 확인을 누르면 form 제출
+            } else {
+                return false; // 사용자가 취소를 누르면 form 제출 취소
+            }
+        }
+    </script>
 </head>
 <body layout:fragment="content">
 <h1>이력서 목록</h1>
@@ -21,7 +31,7 @@
         <!-- 수정하기 링크 오른쪽 정렬 -->
         <a th:href="@{'/edit/' + ${resume.id}}" class="edit-link">수정하기</a>
         <!-- 삭제하기 버튼 추가 -->
-        <form th:action="@{'/delete/' + ${resume.id}}" method="post">
+        <form th:action="@{'/delete/' + ${resume.id}}" method="post" onsubmit="return confirmDelete()">
             <button type="submit" class="delete-button">삭제하기</button>
         </form>
     </div>
