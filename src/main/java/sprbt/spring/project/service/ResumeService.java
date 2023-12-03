@@ -194,4 +194,24 @@ public class ResumeService {
 
         return profileImgDto;
     }
+    public void deleteResume(Long resumeId) {
+        Optional<Resume> optionalResume = resumeRepository.findById(resumeId);
+        if (optionalResume.isPresent()) {
+            Resume resume = optionalResume.get();
+            resumeRepository.delete(resume);
+        } else {
+            throw new EntityNotFoundException("해당 이력서를 찾을 수 없습니다: " + resumeId);
+        }
+    }
+    public void deleteResumeAndRelatedProfileImg(Long resumeId) {
+        // 이력서 ID에 해당하는 프로필 이미지를 찾아서 삭제
+        ProfileImg profileImg = profileImgRepository.findByResumeId(resumeId);
+        if (profileImg != null) {
+            // 프로필 이미지가 존재하면 삭제
+            profileImgRepository.delete(profileImg);
+        }
+
+        // 이후에 이력서 삭제
+        resumeRepository.deleteById(resumeId);
+    }
 }

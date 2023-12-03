@@ -105,7 +105,11 @@ public class ResumeController {
 
         return "resume/resumeList";
     }
-
+    @PostMapping("/delete/{resumeId}")
+    public String deleteResume(@PathVariable Long resumeId) {
+        resumeService.deleteResumeAndRelatedProfileImg(resumeId);
+        return "redirect:/list"; // 삭제 후 이력서 목록 페이지로 리다이렉트
+    }
 
     // 다른 메서드들...
 

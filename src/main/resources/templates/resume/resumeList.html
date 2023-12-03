@@ -20,6 +20,10 @@
         <h3 class="resume-name" th:text="${resume.resumename}">이력서 이름</h3>
         <!-- 수정하기 링크 오른쪽 정렬 -->
         <a th:href="@{'/edit/' + ${resume.id}}" class="edit-link">수정하기</a>
+        <!-- 삭제하기 버튼 추가 -->
+        <form th:action="@{'/delete/' + ${resume.id}}" method="post">
+            <button type="submit" class="delete-button">삭제하기</button>
+        </form>
     </div>
 </div>
 </body>

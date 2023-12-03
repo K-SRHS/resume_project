@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Edit Resume</title>
+    <title>이력서 수정</title>
     <link rel="stylesheet" type="text/css" href="/css/common-style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script th:inline="javascript">
@@ -47,8 +47,10 @@
         <div class="container">
             <div class="img-container">
                 <div class="img-div">
-                    <img id="previewImg" th:src="@{${profileImgUrl}}" alt="Image Preview" style="max-width: 150px; max-height: 150px;">
+                    <img id="DefaultImg" th:if="${not #strings.isEmpty(profileImgUrl)}" th:src="${profileImgUrl}" alt="Default Image" style="max-width: 150px; max-height: 150px;">
+                    <img id="previewImg" th:if="${#strings.isEmpty(profileImgUrl)}" src="/img/nomal.jpg" alt="Image Preview" style="max-width: 150px; max-height: 150px;">
                 </div>
+
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" id="profileImgFile" name="profileImgFile" style="display: none;">
                     <label class="custom-file-label" for="profileImgFile">이미지 선택</label>
