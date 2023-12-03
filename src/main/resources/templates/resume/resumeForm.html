@@ -33,13 +33,13 @@
 
 <body>
 <div layout:fragment="content">
-    <h1>이력서 등록</h1>
+    <h1>이력서 작성</h1>
     <form role="form" method="post" enctype="multipart/form-data" th:object="${resumeFormDto}">
         <input type="hidden" th:field="*{id}">
 
         <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text">이력서이름</span>
+                <span class="input-group-text">이력서 제목</span>
             </div>
             <input type="text" required th:field="*{resumename}" class="form-control" placeholder="이력서이름을 입력해주세요">
             <p th:if="${#fields.hasErrors('resumename')}" th:errors="*{resumename}" class="fieldError">잘못된 데이터입니다.</p>

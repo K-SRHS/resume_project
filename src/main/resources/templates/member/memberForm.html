@@ -4,11 +4,15 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
 <!-- 사용자 CSS 추가 -->
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/common-style.css">
+</head>
 <th:block layout:fragment="css">
     <style>
         .fieldError {
             color: red;
         }
+
     </style>
 </th:block>
 
@@ -25,8 +29,9 @@
 </th:block>
 
 <div layout:fragment="content">
-    <h1>사용자 등록</h1>
-    <form action="/member/new" role="form" method="post"  th:object="${memberFormDto}">
+
+        <h1>회원가입</h1>
+    <form action="/member/new" role="form" method="post"  th:object="${memberFormDto}" class="member">
         <div class="form-group mb-3">
             <label th:for="name">이름</label>
             <input type="text" th:field="*{name}" class="form-control" placeholder="이름을 입력해주세요">

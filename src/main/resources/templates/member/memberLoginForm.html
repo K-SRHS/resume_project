@@ -2,19 +2,22 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
-
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/common-style.css">
+</head>
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
     <style>
         .error {
             color: #bd2130;
         }
+
     </style>
 </th:block>
 
 <div layout:fragment="content">
-
-    <form role="form" method="post" action="/member/login">
+    <h1>로그인</h1>
+    <form role="form" method="post" action="/member/login" class="member">
         <div class="form-group mb-3">
             <label th:for="email">이메일주소</label>
             <input type="email" name="email" class="form-control" placeholder="이메일을 입력해주세요">
