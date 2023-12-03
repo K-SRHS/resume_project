@@ -157,3 +157,22 @@
 .custom-file-label {
     cursor: pointer; /* 파일 선택 레이블에 포인터 커서를 적용합니다 */
 }
+    .image-zoom {
+        margin-bottom: 30px; /* 이미지 아래쪽 여백을 30px로 조정 */
+        text-align: center; /* 텍스트를 중앙 정렬 */
+    }
+
+    .image-zoom img {
+        display: block;
+        margin: 0 auto 10px; /* 이미지와 텍스트 간 여백 조정 (아래 여백 10px 추가) */
+        width: 300px; /* 이미지 가로 크기 설정 */
+    }
+
+    .image-zoom p {
+        font-size: 20px; /* 글자 크기를 20px로 설정 */
+    }
+.custom-file-label:hover {
+    background-color: #2980b9;
+    color: white;
+    cursor: pointer;
+}

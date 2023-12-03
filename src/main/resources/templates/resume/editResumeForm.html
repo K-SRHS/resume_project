@@ -20,6 +20,7 @@
                 var reader = new FileReader();
                 reader.onload = function(e) {
                     $('#previewImg').attr('src', e.target.result);
+                    $('#DefaultImg').attr('src', e.target.result);
                 };
                 reader.readAsDataURL(this.files[0]);
 
