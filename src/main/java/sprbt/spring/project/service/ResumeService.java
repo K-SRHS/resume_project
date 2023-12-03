@@ -147,6 +147,9 @@ public class ResumeService {
         resumeFormDto.setImgName(resume.getProfileImg().getImgName());
         resumeFormDto.setOriImgName(resume.getProfileImg().getOriImgName());
         resumeFormDto.setImgUrl(resume.getProfileImg().getImgUrl());
+        resumeFormDto.setName(resume.getMember().getName());
+        resumeFormDto.setEmail(resume.getMember().getEmail());
+        resumeFormDto.setAddress(resume.getMember().getAddress());
         // 필요한 다른 필드들을 설정합니다.
 
         return resumeFormDto;

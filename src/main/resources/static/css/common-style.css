@@ -128,3 +128,24 @@
           align-items: center;
 
         }
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row; /* 가로 방향으로 배치 */
+}
+
+.img-container {
+    display: flex;
+    flex-direction: column; /* 세로 방향으로 배치 */
+    margin-right: 20px; /* 사용자 정보와 이미지 사이 간격 조정 */
+}
+
+.img-div {
+    margin-bottom: 10px; /* 이미지와 버튼 사이 간격 조정 */
+}
+
+
+        .user-info {
+            margin-top: 20px; /* 이미지 선택 부분과의 간격 조절 */
+        }

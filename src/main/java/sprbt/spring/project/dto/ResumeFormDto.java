@@ -49,6 +49,12 @@ public class ResumeFormDto {
 
     private String imgUrl;
 
+    private String name;
+
+    private String email;
+
+    private String address;
+
     private static ModelMapper modelMapper = new ModelMapper();
 
 //    public Item createItem(){

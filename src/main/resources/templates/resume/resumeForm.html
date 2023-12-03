@@ -44,15 +44,19 @@
             <input type="text" required th:field="*{resumename}" class="form-control" placeholder="이력서이름을 입력해주세요">
             <p th:if="${#fields.hasErrors('resumename')}" th:errors="*{resumename}" class="fieldError">잘못된 데이터입니다.</p>
         </div>
-
-        <div class="img-div">
-            <img id="previewImg" src="/img/nomal.jpg" alt="Image Preview" style="max-width: 150px; max-height: 150px;">
+        <div class="container">
+            <div class="img-container">
+                <div class="img-div">
+                    <img id="previewImg" src="/img/nomal.jpg" alt="Image Preview" style="max-width: 150px; max-height: 150px;">
+                </div>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="profileImgFile" name="profileImgFile" style="display: none;">
+                    <label class="custom-file-label" for="profileImgFile">이미지 선택</label>
+                </div>
+            </div>
         </div>
 
-        <div class="custom-file img-div">
-            <input type="file" class="custom-file-input" id="profileImgFile" name="profileImgFile" style="display: none;">
-            <label class="custom-file-label" for="profileImgFile">이미지 선택</label>
-        </div>
+
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text">최종학력</span>
